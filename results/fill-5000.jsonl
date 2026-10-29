@@ -1,0 +1,3 @@
+{"policy":"spread","nodes":5000,"pods":14060,"pods_bound":12407,"gpu_allocation_ratio":0.5694,"node_fragmentation_ratio":1,"fully_free_nodes":0,"whole_node_jobs_fit_after":0,"seed":1}
+{"policy":"binpack","nodes":5000,"pods":14060,"pods_bound":14060,"gpu_allocation_ratio":0.9,"node_fragmentation_ratio":0,"fully_free_nodes":500,"whole_node_jobs_fit_after":500,"seed":1}
+{"policy":"frag","nodes":5000,"pods":14060,"pods_bound":14060,"gpu_allocation_ratio":0.9,"node_fragmentation_ratio":0,"fully_free_nodes":500,"whole_node_jobs_fit_after":500,"seed":1}

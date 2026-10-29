@@ -1,0 +1,19 @@
+# MixSched: eval-first queue order, fragmentation-aware GPU scoring, gang
+# Permit. The resource-fit filter stays; the spreading scores are turned off.
+apiVersion: kubescheduler.config.k8s.io/v1
+kind: KubeSchedulerConfiguration
+clientConnection: {kubeconfig: KUBECONFIG, qps: 5000, burst: 10000}
+leaderElection: {leaderElect: false}
+profiles:
+- schedulerName: default-scheduler
+  plugins:
+    queueSort:
+      enabled: [{name: MixSched}]
+      disabled: [{name: PrioritySort}]
+    preFilter:
+      enabled: [{name: MixSched}]
+    score:
+      enabled: [{name: MixSched, weight: 10}]
+      disabled: [{name: NodeResourcesBalancedAllocation}, {name: NodeResourcesFit}]
+    permit:
+      enabled: [{name: MixSched}]

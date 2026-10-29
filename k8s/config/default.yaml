@@ -1,0 +1,8 @@
+# Baseline 1: kube-scheduler defaults (NodeResourcesFit LeastAllocated on
+# CPU and memory, BalancedAllocation): spreads pods, and knows nothing of GPUs.
+apiVersion: kubescheduler.config.k8s.io/v1
+kind: KubeSchedulerConfiguration
+clientConnection: {kubeconfig: KUBECONFIG, qps: 5000, burst: 10000}
+leaderElection: {leaderElect: false}
+profiles:
+- schedulerName: default-scheduler

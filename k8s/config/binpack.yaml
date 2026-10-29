@@ -1,0 +1,19 @@
+# Baseline 2: bin packing on GPUs (NodeResourcesFit MostAllocated on
+# nvidia.com/gpu), the usual GPU-cluster setting.
+apiVersion: kubescheduler.config.k8s.io/v1
+kind: KubeSchedulerConfiguration
+clientConnection: {kubeconfig: KUBECONFIG, qps: 5000, burst: 10000}
+leaderElection: {leaderElect: false}
+profiles:
+- schedulerName: default-scheduler
+  pluginConfig:
+  - name: NodeResourcesFit
+    args:
+      scoringStrategy:
+        type: MostAllocated
+        resources:
+        - {name: nvidia.com/gpu, weight: 1}
+  plugins:
+    score:
+      disabled:
+      - name: NodeResourcesBalancedAllocation

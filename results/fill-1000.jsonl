@@ -1,0 +1,9 @@
+{"policy":"spread","nodes":1000,"pods":2814,"pods_bound":2500,"gpu_allocation_ratio":0.5885,"node_fragmentation_ratio":1,"fully_free_nodes":0,"whole_node_jobs_fit_after":0,"seed":1}
+{"policy":"binpack","nodes":1000,"pods":2814,"pods_bound":2814,"gpu_allocation_ratio":0.9025,"node_fragmentation_ratio":0.005128205128205128,"fully_free_nodes":97,"whole_node_jobs_fit_after":97,"seed":1}
+{"policy":"frag","nodes":1000,"pods":2814,"pods_bound":2814,"gpu_allocation_ratio":0.9025,"node_fragmentation_ratio":0.005128205128205128,"fully_free_nodes":97,"whole_node_jobs_fit_after":97,"seed":1}
+{"policy":"spread","nodes":1000,"pods":2665,"pods_bound":2299,"gpu_allocation_ratio":0.534,"node_fragmentation_ratio":1,"fully_free_nodes":0,"whole_node_jobs_fit_after":0,"seed":2}
+{"policy":"binpack","nodes":1000,"pods":2665,"pods_bound":2665,"gpu_allocation_ratio":0.9,"node_fragmentation_ratio":0,"fully_free_nodes":100,"whole_node_jobs_fit_after":100,"seed":2}
+{"policy":"frag","nodes":1000,"pods":2665,"pods_bound":2665,"gpu_allocation_ratio":0.9,"node_fragmentation_ratio":0,"fully_free_nodes":100,"whole_node_jobs_fit_after":100,"seed":2}
+{"policy":"spread","nodes":1000,"pods":2748,"pods_bound":2388,"gpu_allocation_ratio":0.54025,"node_fragmentation_ratio":1,"fully_free_nodes":0,"whole_node_jobs_fit_after":0,"seed":3}
+{"policy":"binpack","nodes":1000,"pods":2748,"pods_bound":2748,"gpu_allocation_ratio":0.90025,"node_fragmentation_ratio":0.007518796992481203,"fully_free_nodes":99,"whole_node_jobs_fit_after":99,"seed":3}
+{"policy":"frag","nodes":1000,"pods":2748,"pods_bound":2748,"gpu_allocation_ratio":0.90025,"node_fragmentation_ratio":0.007518796992481203,"fully_free_nodes":99,"whole_node_jobs_fit_after":99,"seed":3}
