@@ -29,6 +29,8 @@ are simulated nodes: pods bind but never run. Model and limits:
 
 ### Trace replay: Acme (simulated)
 
+Each cell is one deterministic replay of one trace window (no repeated runs), so small differences between policies are not significant; the ablation notes below say which effects held on both windows.
+
 Seren, days 112-126 (the most evaluation-heavy two weeks: 164,525 GPU
 jobs). The real cluster had 286 nodes; shrinking it to 240 and 200 raises
 the load. At 286 and 240 nodes MixSched and binpack keep every queue near
@@ -142,7 +144,7 @@ run):
 ```bash
 git clone --depth 1 https://github.com/InternLM/AcmeTrace /tmp/AcmeTrace
 cp /tmp/AcmeTrace/data/job_trace/trace_*.csv data/
-go build -o bin/mixsched ./cmd/mixsched && go test ./...
+go build -o bin/mixsched ./cmd/mixsched && go test -race ./...
 
 ./bin/mixsched -trace data/trace_seren.csv -from-day 112 -days 14 -nodes 200 \
     -policies fifo,binpack,kueue,mixsched,mixsched-nofrag,mixsched-nolease
@@ -166,7 +168,7 @@ k8s/config/     scheduler profiles: default, binpack, mixsched
 k8s/bench/      KWOK benchmark driver (nodes, job mix, fill, metrics scrape)
 bench/          run_all.sh, plot.py, k8s/ (build, fetch, cluster, run)
 results/        SUMMARY.md, figures, runs.jsonl, fgd.jsonl, k8s.jsonl, fill-*.jsonl
-docs/DESIGN.md  model, policies, the Kubernetes port, metrics, validity threats, interview notes
+docs/DESIGN.md  model, policies, the Kubernetes port, metrics, validity threats, design notes
 ```
 
 ## What is not here
@@ -184,29 +186,5 @@ docs/DESIGN.md  model, policies, the Kubernetes port, metrics, validity threats,
 - **5,000-node seeds 2 and 3, and a run with `percentageOfNodesToScore: 100`**:
   stopped to finish on time; the 5,000-node rows are one seed.
 - **MIG**: sharing is modelled as MPS (two evals per GPU with a slowdown).
+- **CI scope**: CI builds and tests the simulator module only. The plugin (`k8s/`) needs a Kubernetes v1.34.2 checkout (`bench/k8s/build.sh`), so its unit tests are run there, not in CI.
 - **Upstream**: nothing was contributed to Kueue or scheduler-plugins.
-
-## Resume bullets (trace replay and KWOK; say "simulated")
-
-- Designed MixSched, a GPU scheduling layer for mixed training, evaluation
-  and inference (eval-first ordering, fragmentation-aware placement, eval GPU
-  sharing and batching, lease-aware lending of idle inference GPUs,
-  checkpoint-aware reclaim), evaluated by replaying about 222k jobs of the public
-  Acme LLM-cluster traces in a Go discrete-event simulator.
-- At about 82% effective utilization on Seren, cut simulated p99 eval
-  queueing from 2.6 h to 1.7 h and mean training JCT slowdown from 42 to 18
-  against a Kueue-style baseline, with node fragmentation down from 0.75 to
-  0.24 and 100% inference SLO; ablations showed lease-aware lending alone
-  avoided 1.2-2.2k GPU-hours of preempted work per two weeks.
-- Built the placement half as a kube-scheduler v1.34.2 framework plugin
-  (eval-first QueueSort, fragmentation-aware Score, PreFilter + Permit gangs)
-  and benchmarked it on a from-source control plane with 1,000 and 5,000
-  KWOK GPU nodes: 252 and 160 pods/s with every gang placed, against 168 and
-  70 pods/s for the default scheduler, which stranded 347 and 1,645 gang pods;
-  found that kube-scheduler's node sampling (10% of 5,000 nodes) breaks the
-  simulator's placement fidelity at 5,000 nodes while it matched exactly at
-  1,000.
-- Re-implemented FGD (ATC '23) on the Alibaba GPU trace v2023: 36% less
-  unallocated GPU capacity than the best baseline at full demand (5.0% vs
-  7.9%), and showed MixSched's whole-GPU fragmentation score was no better
-  than packing on fractional-GPU work.

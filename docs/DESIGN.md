@@ -165,7 +165,7 @@ each task goes to the node and GPU that increase it least).
   the KWOK numbers are scheduler throughput, decision latency and placement,
   on a 2-vCPU box shared with etcd, the apiserver and KWOK.
 
-## 6. Interview defence notes
+## 6. Design notes
 
 - *Why Kueue plus a plugin rather than a custom scheduler?* Kueue already
   owns quota, admission, borrowing and preemption across ClusterQueues; the

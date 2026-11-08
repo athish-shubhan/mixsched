@@ -9,3 +9,8 @@ CC-BY-4.0. They are not committed here; fetch them with:
 git clone --depth 1 https://github.com/InternLM/AcmeTrace /tmp/AcmeTrace
 cp /tmp/AcmeTrace/data/job_trace/trace_*.csv data/
 ```
+
+`data/alibaba/openb_*.csv` are the `openb` GPU-sharing trace files from
+https://github.com/alibaba/clusterdata (Alibaba GPU trace v2023, used by
+Weng et al., "Beware of Fragmentation", ATC '23), included here for reproducibility;
+see that repository for its license and attribution terms.

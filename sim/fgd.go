@@ -143,7 +143,9 @@ func classes(pods []trace.AliPod) ([]aliClass, func(trace.AliPod) int) {
 	for k := range group {
 		keys = append(keys, k)
 	}
-	sort.Slice(keys, func(i, j int) bool { return keys[i][0] < keys[j][0] || (keys[i][0] == keys[j][0] && keys[i][1] < keys[j][1]) })
+	sort.Slice(keys, func(i, j int) bool {
+		return keys[i][0] < keys[j][0] || (keys[i][0] == keys[j][0] && keys[i][1] < keys[j][1])
+	})
 	idx := map[[2]int64]int{}
 	var out []aliClass
 	for i, k := range keys {
